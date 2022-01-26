@@ -8,7 +8,8 @@
 
 ***
 
-##Downloads
+## Downloads
+
 **Google Chrome**
 
 * [Chrome browser](https://www.google.com/chrome/?brand=BNSD&gclid=Cj0KCQiAubmPBhCyARIsAJWNpiM2YcHnYN2CXWFslYRJt3isweWCT-HVbDT90VXmUXZt6A95QyQ-lNEaAlDGEALw_wcB&gclsrc=aw.ds)
@@ -43,7 +44,7 @@
 
 ***
 
-##Steps to run tests:
+## Steps to run tests:
 1. Clone the repository to your local machine
 2. Open bash/terminal/cmd and navigate to previously cloned repository
 3. Go to "TestFramework" module
@@ -54,7 +55,7 @@
 
 ***
 
-##Technologies used
+## Technologies used
 1. **Selenium** - for browser interaction
 2. **Assertions** - 
 * from TestNG for front-end - [TestNG](https://testng.org/doc/documentation-main.html)
