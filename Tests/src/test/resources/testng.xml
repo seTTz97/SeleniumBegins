@@ -1,0 +1,21 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name = "BackendSuite">
+    <test name = "backendTest">
+
+        <parameter name = "desiredBoardName" value="sampleBoard"/>
+        <parameter name = "updatedName" value="SeleniumBoard"/>
+        <parameter name = "closed" value="true"/>
+        <parameter name = "updatedDescription" value="updatedDescription"/>
+        <parameter name = "updatedBackgroundColor" value="green"/>
+        <parameter name = "updatedBlue" value="123"/>
+        <parameter name = "updatedPinned" value="pinned"/>
+        <parameter name = "updatedIsTemplate" value="updatedIsTemplate"/>
+
+        <classes>
+            <class name = "com.griddynamics.UpdatingBoardTest" />
+        </classes>
+
+    </test>
+</suite>
