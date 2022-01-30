@@ -12,10 +12,10 @@ public class SignUpTest {
         LogInPage.email = PropertiesLoader.loadChosenProperty("trello.email");
         LogInPage.password = PropertiesLoader.loadChosenProperty("trello.password");
     }
-    @Test
-    public void signUp() throws InterruptedException {
-        SignUpPage signUpPage = Pages.signUpPage();
-        signUpPage.goToSignInPageInChrome();
-        assertTrue(signUpPage.isAt());
-    }
+//    @Test
+//    public void signUp() throws InterruptedException {
+//        SignUpPage signUpPage = Pages.signUpPage();
+//        signUpPage.goToSignUpPageInChrome();
+//        assertTrue(signUpPage.isAt());
+//    }
 }

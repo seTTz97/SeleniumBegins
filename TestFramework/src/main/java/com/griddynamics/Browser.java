@@ -3,142 +3,88 @@ package com.griddynamics;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.concurrent.TimeUnit;
 
+
 public class Browser {
-    static WebDriver chromeDriver;
-    static WebDriver firefoxDriver;
-    static WebDriver safariDriver;
     static String title = "";
     static WebDriverWait waitFirefox;
     static WebDriverWait waitChrome;
     static WebDriverWait waitSafari;
 
-    public static void logInChrome(String url) {
-        chromeDriver = new ChromeDriver();
-        chromeDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+    public static void logInChrome(String url, WebDriver chromeDriver) throws InterruptedException {
         chromeDriver.get(url);
-        WebElement email = chromeDriver.findElement(By.name("user"));
-        email.sendKeys(LogInPage.email);
-        WebElement logInButton = chromeDriver.findElement(By.xpath("//*[@id='login']"));
-        logInButton.click();
-        WebElement password = chromeDriver.findElement(By.className("css-1us7xzt"));
-        password.sendKeys(LogInPage.password);
-        WebElement submitButton = chromeDriver.findElement(By.id("login-submit"));
-        submitButton.click();
-        chromeDriver.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
-        chromeDriver.findElement(By.xpath("//*[@id='header']/a")).click();
+        waitChrome = new WebDriverWait(chromeDriver, 10);
+        LogInPage.insertEmail(chromeDriver);
+        LogInPage.clickOnLogInButton(chromeDriver);
+        Thread.sleep(2000);
+        LogInPage.insertPassword(chromeDriver);
+        LogInPage.clickOnSubmitButton(chromeDriver);
+        waitChrome.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='header']/a")));
+        LogInPage.clickOnHeader(chromeDriver);
         title = chromeDriver.getTitle();
     }
 
-    public static void logOutChrome(String url) {
-        logInChrome(url);
-        waitChrome = new WebDriverWait(chromeDriver, 10);
-        WebElement profileMenu = chromeDriver.findElement(By.xpath("//*[@id='header']/div[4]/button[3]"));
-        profileMenu.click();
-        WebElement logOutButton = chromeDriver.findElement(By.xpath("/html/body/div[2]/div/section/div/nav/ul/li[8]/button"));
-        logOutButton.click();
-        WebElement logOutSubmitButton = chromeDriver.findElement(By.id("logout-submit"));
-        logOutSubmitButton.click();
+    public static void logOutChrome(String url, WebDriver chromeDriver) throws InterruptedException {
+        logInChrome(url, chromeDriver);
+        LogOutPage.clickOnProfileMenuButton(chromeDriver);
+        chromeDriver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+        LogOutPage.clickOnLogOutButton(chromeDriver);
+        chromeDriver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+        LogOutPage.clickOnLogOutSubmitButton(chromeDriver);
         waitChrome.until(ExpectedConditions.titleIs("Logged out of Trello"));
         title = chromeDriver.getTitle();
     }
 
-    public static void logInFirefox(String url) throws InterruptedException {
-        firefoxDriver = new FirefoxDriver();
+    public static void logInFirefox(String url, WebDriver firefoxDriver) throws InterruptedException {
         firefoxDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         waitFirefox = new WebDriverWait(firefoxDriver, 10);
         firefoxDriver.get(url);
-        WebElement email = firefoxDriver.findElement(By.name("user"));
-        email.sendKeys(LogInPage.email);
-        firefoxDriver.findElement(By.id("login")).sendKeys(Keys.ENTER);
-        Thread.sleep(3000);
+        LogInPage.insertEmail(firefoxDriver);
+        LogInPage.clickOnLogInButton(firefoxDriver);
         waitFirefox.until(ExpectedConditions.titleIs("Log in to continue - Log in with Atlassian account"));
-        waitFirefox.until(ExpectedConditions.visibilityOfElementLocated(By.id("password")));
-        WebElement password = firefoxDriver.findElement(By.id("password"));
-        password.sendKeys(LogInPage.password);
-        WebElement submitButton = firefoxDriver.findElement(By.id("login-submit"));
-        submitButton.sendKeys(Keys.ENTER);
-        firefoxDriver.findElement(By.xpath("//*[@id='header']/a")).click();
+        LogInPage.insertPassword(firefoxDriver);
+        Thread.sleep(2000);
+        LogInPage.clickOnSubmitButton(firefoxDriver);
+        waitFirefox.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='header']/a")));
+        LogInPage.clickOnHeader(firefoxDriver);
         title = firefoxDriver.getTitle();
     }
 
-    public static void logOutFirefox(String url) throws InterruptedException {
-        logInFirefox(url);
-        WebElement profileMenu = firefoxDriver.findElement(By.xpath("//*[@id='header']/div[4]/button[3]"));
-        profileMenu.click();
-        WebElement logOutButton = firefoxDriver.findElement(By.xpath("/html/body/div[2]/div/section/div/nav/ul/li[8]/button"));
-        logOutButton.click();
-        WebElement logOutSubmitButton = firefoxDriver.findElement(By.id("logout-submit"));
-        logOutSubmitButton.click();
+    public static void logOutFirefox(String url, WebDriver firefoxDriver) throws InterruptedException {
+        logInFirefox(url, firefoxDriver);
+        LogOutPage.clickOnProfileMenuButton(firefoxDriver);
+        LogOutPage.clickOnLogOutButton(firefoxDriver);
+        LogOutPage.clickOnLogOutSubmitButton(firefoxDriver);
         waitFirefox.until(ExpectedConditions.titleIs("Logged out of Trello"));
         title = firefoxDriver.getTitle();
     }
 
-    public static void logInSafari(String url) throws InterruptedException {
-        safariDriver = new SafariDriver();
-        safariDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+    public static void logInSafari(String url, WebDriver safariDriver) throws InterruptedException {
         waitSafari = new WebDriverWait(safariDriver, 8);
-        safariDriver.manage().window().maximize();
         safariDriver.get(url);
-        WebElement email = safariDriver.findElement(By.name("user"));
-        email.sendKeys(LogInPage.email);
-        safariDriver.findElement(By.id("login")).sendKeys(Keys.ENTER);
-        Thread.sleep(3000);
+        LogInPage.insertEmail(safariDriver);
+        LogInPage.clickOnLogInButton(safariDriver);
         waitSafari.until(ExpectedConditions.titleIs("Log in to continue - Log in with Atlassian account"));
-        waitSafari.until(ExpectedConditions.presenceOfElementLocated(By.id("password")));
-        WebElement password = safariDriver.findElement(By.id("password"));
-        password.sendKeys(LogInPage.password);
-        WebElement submitButton = safariDriver.findElement(By.id("login-submit"));
-        submitButton.sendKeys(Keys.ENTER);
+        Thread.sleep(2000);
+        LogInPage.insertPassword(safariDriver);
+        LogInPage.clickOnSubmitButton(safariDriver);
         waitSafari.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='header']/a")));
-        safariDriver.findElement(By.xpath("//*[@id='header']/a")).click();
+        LogInPage.clickOnHeader(safariDriver);
         title = safariDriver.getTitle();
     }
 
-    public static void logOutSafari(String url) throws InterruptedException {
-        logInSafari(url);
-        WebElement profileMenu = safariDriver.findElement(By.xpath("//*[@id='header']/div[4]/button[3]"));
-        profileMenu.click();
-        WebElement logOutButton = safariDriver.findElement(By.xpath("/html/body/div[2]/div/section/div/nav/ul/li[8]/button"));
-        logOutButton.click();
-        WebElement logOutSubmitButton = safariDriver.findElement(By.id("logout-submit"));
-        logOutSubmitButton.click();
+    public static void logOutSafari(String url, WebDriver safariDriver) throws InterruptedException {
+        logInSafari(url, safariDriver);
+        LogOutPage.clickOnProfileMenuButton(safariDriver);
+        LogOutPage.clickOnLogOutButton(safariDriver);
+        waitSafari.until(ExpectedConditions.visibilityOfElementLocated(By.id("logout-submit")));
+        LogOutPage.clickOnLogOutSubmitButton(safariDriver);
         waitSafari.until(ExpectedConditions.titleIs("Logged out of Trello"));
         title = safariDriver.getTitle();
-    }
-
-    public static void signUpChrome(String url) throws InterruptedException {
-        chromeDriver = new ChromeDriver();
-        waitChrome = new WebDriverWait(chromeDriver, 10);
-        chromeDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        chromeDriver.get(url);
-        chromeDriver.findElement(By.xpath("/html/body/header/nav/div/a[2]")).click();
-        waitChrome.until(ExpectedConditions.visibilityOfElementLocated(By.id("google")));
-        chromeDriver.findElement(By.name("email")).sendKeys("ief03783@zwoho.com");
-        chromeDriver.manage().timeouts().implicitlyWait(6, TimeUnit.SECONDS);
-        chromeDriver.findElement(By.id("signup-submit")).click();
-        chromeDriver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
-        chromeDriver.findElement(By.name("displayName")).sendKeys("Will Smith");
-        chromeDriver.findElement(By.id("signup-submit")).click();
-        Thread.sleep(10000);
-        chromeDriver.findElement(By.xpath("//*[@id='content']/div/main/div[1]/div/form/button")).click();
-        chromeDriver.findElement(By.xpath("//*[@id='content']/div/main/div[1]/div/div[4]/div/button[1]")).click();
-        Thread.sleep(4000);
-        title = chromeDriver.getTitle();
-    }
-
-    public static void close() {
-        chromeDriver.close();
-        firefoxDriver.close();
-        safariDriver.close();
     }
 
 }
