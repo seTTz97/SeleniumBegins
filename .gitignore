@@ -3,3 +3,5 @@ Tests/target
 TestFramework/target
 TestFramework/TestFramework.iml
 .idea
+.DS_Store
+Tests/.DS_Store
