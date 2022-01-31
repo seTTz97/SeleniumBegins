@@ -29,7 +29,6 @@ public class LogInTest {
 
     @Test(priority = 0)
     public void shouldLogInChrome() throws InterruptedException {
-        System.out.println(LogInPage.email);
         logInPage.goToLogInPageInChrome(chromeDriver);
         assertTrue(logInPage.isAtDestination());
     }

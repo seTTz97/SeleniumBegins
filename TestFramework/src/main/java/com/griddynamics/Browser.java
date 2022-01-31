@@ -46,8 +46,8 @@ public class Browser {
         LogInPage.insertEmail(firefoxDriver);
         LogInPage.clickOnLogInButton(firefoxDriver);
         waitFirefox.until(ExpectedConditions.titleIs("Log in to continue - Log in with Atlassian account"));
-        LogInPage.insertPassword(firefoxDriver);
         Thread.sleep(2000);
+        LogInPage.insertPassword(firefoxDriver);
         LogInPage.clickOnSubmitButton(firefoxDriver);
         waitFirefox.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='header']/a")));
         LogInPage.clickOnHeader(firefoxDriver);
