@@ -8,7 +8,4 @@ public class Pages {
     public static LogOutPage logOutPage(){
         return new LogOutPage();
     }
-//    public static SignUpPage signUpPage(){
-//        return new SignUpPage();
-//    }
 }
